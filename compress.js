@@ -26,14 +26,22 @@ module.exports = {
 	},
 	lzma: {
 		compress: function(buffer, ratio, cb) {
-			lzma.compress(buffer, ratio, function onComplete(byteArray) {
-				safeCallback(function () { return new Buffer(byteArray); }, cb);
-			});
+			try {
+				lzma.compress(buffer, ratio, function onComplete(byteArray) {
+					safeCallback(function () { return new Buffer(byteArray); }, cb);
+				});
+			} catch (err) {
+				cb(err);
+			}
 		},
 		decompress: function(buffer, cb) {
-			lzma.decompress(buffer, function onComplete(byteArray) {
-				safeCallback(function () { return new Buffer(byteArray); }, cb);
-			});
+			try {
+				lzma.decompress(buffer, function onComplete(byteArray) {
+					safeCallback(function () { return new Buffer(byteArray); }, cb);
+				});
+			} catch (err) {
+				cb(err);
+			}
 		}
 	}
 };
