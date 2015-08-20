@@ -13,7 +13,8 @@ All functions are callback-style async.
 ### Compress
 
 ```
-	require('json-url').compress(someJson, function cb(err, result) {
+	var obj = { one: 1, two: 2, three: [1,2,3], four: 'red pineapples' };
+	require('json-url').compress(obj, function cb(err, result) {
 		console.log(result); // will be url-friendly string
 	});
 ```
@@ -38,7 +39,7 @@ All functions are callback-style async.
 
 I explored several options, the most popular one being [MessagePack][1]. However, I noticed that it did not give the best possible compression as compared to [LZMA][2] and [LZW][3].
 
-At first I tried to apply the binary compression directly on a stringified JSON, then I realised that packing it first resulted in better compression. For short strings, LZW largely outperformed LZMA, but for the most part you'd probably be looking to compress large JSON data rather than small amounts (otherwise a simple stringify + base64 is sufficient), so I went with LZMA - this may be configurable in later (major) versions, although it will likely break backward compatibility.
+At first I tried to apply the binary compression directly on a stringified JSON, then I realised that packing it first resulted in better compression. For small JS objects, LZW largely outperformed LZMA, but for the most part you'd probably be looking to compress large JSON data rather than small amounts (otherwise a simple stringify + base64 is sufficient), so I went with LZMA - this may be configurable in later (major) versions, although it will likely break backward compatibility.
 
 Finally, I went with [urlsafe-base64][4] to encode it in a URL-friendly format.
 
