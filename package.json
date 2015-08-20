@@ -1,0 +1,17 @@
+{
+  "name": "json-url",
+  "version": "1.0.0",
+  "description": "Compress JSON into compact base64 URI-friendly notation",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Benjamin Goh <masotime@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "lzma": "^2.1.9",
+    "msgpack": "^0.2.6",
+    "node-lzw": "^0.3.1",
+    "urlsafe-base64": "^1.0.0"
+  }
+}
