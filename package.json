@@ -19,6 +19,7 @@
     "urlsafe-base64": ">= 1.0.0"
   },
   "devDependencies": {
+    "expect": "^1.13.1",
     "mocha": "^2.3.4"
   }
 }
