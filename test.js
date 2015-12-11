@@ -31,6 +31,7 @@ describe('json-url', () => {
       jsonurl.compress(DATA.json, (err, result) => {
         if (err) throw err;
         expect(result.length < lengthOfRawJSON).toBe(true);
+        expect(result).toBe('XQAAAALbAAAAAAAAAABCKcjGk5HEXfZ_irAzWI5smk4U224-XbP8lQ6YYCU5p-w2SkyQtlmfT0VvnCdsfHm2H3--vg78vBOgRpDySu7Zzo8mJRPoQz_ZpMcCzPuxBy37YAs8Nfsx0PzXOkXo4qv3JMVgpdA04vBd0e5Cmn16Un25590ay51jHGD3vQZCciO7wPuv_ofXSFZVhhnkZoj8AY87eMhQ5tautP2CHJ_HvXhJ0KaLLyllpTmipLE3wAtoD8Bk3HeOd_35AkA');
       });
     });
     
