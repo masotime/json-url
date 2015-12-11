@@ -9,13 +9,16 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/masotime/json-url"
-  },  
+  },
   "author": "Benjamin Goh <masotime@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "lzma": "^2.1.9",
-    "msgpack": "^0.2.6",
-    "node-lzw": "^0.3.1",
-    "urlsafe-base64": "^1.0.0"
+    "lzma": ">= 2.1.9",
+    "msgpack": ">= 0.2.6",
+    "node-lzw": ">= 0.3.1",
+    "urlsafe-base64": ">= 1.0.0"
+  },
+  "devDependencies": {
+    "mocha": "^2.3.4"
   }
 }
