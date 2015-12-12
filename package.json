@@ -4,7 +4,7 @@
   "description": "Compress JSON into compact base64 URI-friendly notation",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/mocha test.js"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,7 @@
     "urlsafe-base64": ">= 1.0.0"
   },
   "devDependencies": {
+    "bluebird": "^3.0.6",
     "expect": "^1.13.1",
     "mocha": "^2.3.4"
   }
