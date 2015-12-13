@@ -27,7 +27,7 @@ DATA.json = {
 describe('json-url', function () {
   describe('#compress()', function () {
     it('Should produce a shorter string', function () {
-      let lengthOfRawJSON = JSON.stringify(DATA.json).length;
+      var lengthOfRawJSON = JSON.stringify(DATA.json).length;
 
       jsonurl.compress(DATA.json, function (err, result) {
         if (err) throw err;
