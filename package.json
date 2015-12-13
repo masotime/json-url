@@ -1,6 +1,6 @@
 {
   "name": "json-url",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "Compress JSON into compact base64 URI-friendly notation",
   "main": "index.js",
   "scripts": {
