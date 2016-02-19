@@ -2,14 +2,14 @@
 
 var lzma = require('lzma'),
 	lzw = require('node-lzw'),
-	msgpack = require('msgpack'),
+	msgpack = require('msgpack5')(),
 	safe64 = require('urlsafe-base64');
 
 var apis = require('./compress'),
 	algorithm = 'lzma';
 
 function compress(json, cb) {
-	var packed = msgpack.pack(json);
+	var packed = msgpack.encode(json);
 
 	apis[algorithm].compress(packed, 9, function onComplete(err, result) {
 		if (err) {
@@ -32,7 +32,7 @@ function decompress(compressed, cb) {
 		}
 
 		try {
-			return cb(null, msgpack.unpack(result));
+			return cb(null, msgpack.decode(result));
 		} catch (e) {
 			return cb(e);
 		}
