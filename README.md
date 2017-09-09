@@ -60,5 +60,5 @@ Add tests
 [travis-url]: https://travis-ci.org/masotime/json-url
 [daviddm-image]: https://david-dm.org/masotime/json-url.svg?theme=shields.io
 [daviddm-url]: https://david-dm.org/masotime/json-url
-[coverage-image]: https://coveralls.io/repos/github/masotime/webscrape/json-url.svg?branch=master
+[coverage-image]: https://coveralls.io/repos/github/masotime/json-url/badge.svg?branch=master
 [coverage-url]: https://coveralls.io/github/masotime/json-url?branch=master
