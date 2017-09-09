@@ -11,8 +11,8 @@ export default {
 	lzw: {
 		pack: true,
 		encode: true,
-		compress: async input => new Buffer(lzw.encode(input)),
-		decompress: async input => lzw.decode(new Buffer(input))
+		compress: async input => Buffer.from(lzw.encode(input.toString('binary'))),
+		decompress: async input => Buffer.from(lzw.decode(input), 'binary')
 	},
 	lzma: {
 		pack: true,
@@ -21,21 +21,21 @@ export default {
 			new Promise((ok, fail) =>
 				lzma.compress(input, 9, (byteArray, err) => {
 					if (err) return fail(err);
-					return ok(new Buffer(byteArray));
+					return ok(Buffer.from(byteArray));
 				})
 			),
 		decompress: async input =>
 			new Promise((ok, fail) =>
 				lzma.decompress(input, (byteArray, err) => {
 					if (err) return fail(err);
-					return ok(new Buffer(byteArray));
+					return ok(Buffer.from(byteArray));
 				})
 			)
 	},
 	lzstring: {
 		pack: false,
 		encode: true,
-		compress: async string => new Buffer(lzstring.compress(string)),
-		decompress: async buffer => lzstring.decompress(buffer.toString())
+		compress: async string => Buffer.from(lzstring.compressToUint8Array(string)),
+		decompress: async buffer => lzstring.decompressFromUint8Array(buffer)
 	}
 }

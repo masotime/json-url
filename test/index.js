@@ -2,6 +2,7 @@
 import assert from 'assert';
 import createClient from 'main';
 import { validate } from 'urlsafe-base64';
+import samples from './samples.json'
 
 const DATA = {
 	json: {
@@ -29,28 +30,31 @@ DATA.json = {
 };
 
 describe('json-url', () => {
-	['lzw', 'lzma', 'lzstring'].forEach(algorithm => {
-		describe(`using the ${algorithm} algorithm`, () => {
-			const { compress, decompress, stats} = createClient(algorithm);
+	samples.forEach(sample => {
+		describe(`When attempting to compress ${JSON.stringify(sample).slice(0, 50)}...`, () => {
+			['lzw', 'lzma', 'lzstring'].forEach(algorithm => {
+				describe(`using the ${algorithm} algorithm`, () => {
+					const { compress, decompress, stats} = createClient(algorithm);
 
-			it('compresses JSON via #compress to base64 format', async () => {
-				const compressed = await compress(DATA.json);
-				assert.ok(validate(compressed), `${compressed} is not valid base64`);
+					it('compresses JSON via #compress to base64 format', async () => {
+						const compressed = await compress(DATA.json);
+						assert.ok(validate(compressed), `${compressed} is not valid base64`);
+					});
+
+					it('can decompress JSON compressed via #compress using #decompress', async () => {
+						const compressed = await compress(DATA.json);
+						const decompressed = await decompress(compressed);
+						assert.equal(JSON.stringify(decompressed), JSON.stringify(DATA.json));
+					});
+
+					it('returns stats { rawencoded, compressedencoded, compression } via #stats', async () => {
+						const result = await stats(DATA.json);
+						assert.ok(result['rawencoded']);
+						assert.ok(result['compressedencoded']);
+						assert.ok(result['compression']);
+					});
+				}); // each algorithm
 			});
-
-			it('can decompress JSON compressed via #compress using #decompress', async () => {
-				const compressed = await compress(DATA.json);
-				const decompressed = await decompress(compressed);
-				assert.equal(JSON.stringify(decompressed), JSON.stringify(DATA.json));
-			});
-
-			it('returns stats { rawencoded, compressedencoded, compression } via #stats', async () => {
-				const result = await stats(DATA.json);
-				assert.ok(result['rawencoded']);
-				assert.ok(result['compressedencoded']);
-				assert.ok(result['compression']);
-			});
-		});
-
+		}); // each sample
 	});
 });
