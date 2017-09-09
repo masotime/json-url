@@ -1,14 +1,15 @@
-var lib = require('./index.js');
-var data = [];
+import lib from 'main/index.js';
+
+const data = [];
 
 data.push({"setup":{"protocol":"NVP"},"use":{"master":{"stage":"NO"}},"common_request_params":{"version":"123","method":"SetExpressCheckout"},"NVP":{"SetExpressCheckout":{"AMT":"16","CANCELURL":"http://xotoolslvs01.qa.paypal.com/ectest/cancel.html","L_AMT0":"8","L_NAME0":"Test Item fewarwerwerw","L_QTY0":"2","PAYMENTACTION":"Sale","RETURNURL":"http://xotoolslvs01.qa.paypal.com/ectest/return.html","_custom0__name":"L_DESC0","_custom0":"hello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello worldhello world"}}});
-data.push({ zh: 
+data.push({ zh:
    { name: 'China',
      continent: 'Asia',
      flagColors: [ 'red', 'yellow' ],
      leader: { name: '习 近平-习', title: 'President', term: 137 },
      population: 1370000000 },
-  in: 
+  in:
    { name: 'India',
      continent: '',
      a: true,
@@ -332,7 +333,7 @@ data.forEach(function(datum) {
 		if (err) {
 			console.log(err.stack);
 		} else {
-			console.log(result);	
+			console.log(result);
 		}
 	});
 })

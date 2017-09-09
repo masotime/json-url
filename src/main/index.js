@@ -1,15 +1,13 @@
-'use strict';
+import msgpackFactory from 'msgpack5';
+import safe64 from 'urlsafe-base64';
 
-var lzma = require('lzma'),
-	lzw = require('node-lzw'),
-	msgpack = require('msgpack5')(),
-	safe64 = require('urlsafe-base64');
+import apis from 'main/compress';
 
-var apis = require('./compress'),
-	algorithm = 'lzma';
+const algorithm = 'lzma';
+const msgpack = msgpackFactory();
 
 function compress(json, cb) {
-	var packed = msgpack.encode(json);
+	const packed = msgpack.encode(json);
 
 	apis[algorithm].compress(packed, 9, function onComplete(err, result) {
 		if (err) {
@@ -39,18 +37,15 @@ function decompress(compressed, cb) {
 	});
 }
 
-module.exports = {
+export default {
 	compress: compress,
 	decompress : decompress,
 	stats: function (json, cb) {
 		var stringified = typeof json !== 'string' ? JSON.stringify(json) : json,
-			rawencoded = encodeURIComponent(stringified),
-			compressedencoded;
+			rawencoded = encodeURIComponent(stringified);
 
 		compress(json, function(err, result) {
-			if (err) {
-				return cb(err);
-			}
+			if (err) return cb(err);
 
 			cb(null, {
 				rawencoded: rawencoded.length,

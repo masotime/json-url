@@ -1,9 +1,9 @@
-'use strict';
+/* global describe, it */
+import expect from 'expect';
+import jsonurl from 'main';
+import Promise from 'bluebird';
 
-var expect = require('expect'),
-    jsonurl = require('./'),
-    Promise = require('bluebird'),
-    DATA = {};
+const DATA = {};
 
 DATA.json = {
   "filters": {
@@ -35,7 +35,7 @@ describe('json-url', function () {
         expect(result).toBe('XQAAAALbAAAAAAAAAABCKcjGk5HEXfZ_irAzWI5smk4U224-XbP8lQ6YYCU5p-w2SkyQtlmfT0VvnCdsfHm2H3--vg78vBOgRpDySu7Zzo8mJRPoQz_ZpMcCzPuxBy37YAs8Nfsx0PzXOkXo4qv3JMVgpdA04vBd0e5Cmn16Un25590ay51jHGD3vQZCciO7wPuv_ofXSFZVhhnkZoj8AY87eMhQ5tautP2CHJ_HvXhJ0KaLLyllpTmipLE3wAtoD8Bk3HeOd_35AkA');
       });
     });
-    
+
   });
 
   describe('#decompress()', function () {
@@ -52,7 +52,7 @@ describe('json-url', function () {
 
       function compress (data) {
         return new Promise( function (resolve, reject) {
-          jsonurl.compress(DATA.json, function (err, result) {
+          jsonurl.compress(data, function (err, result) {
             if (err) return reject(err);
             resolve(result);
           });
@@ -70,7 +70,7 @@ describe('json-url', function () {
         console.error(err);
       });
     });
-    
+
   });
-  
+
 });

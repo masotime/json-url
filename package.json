@@ -2,9 +2,13 @@
   "name": "json-url",
   "version": "1.0.4",
   "description": "Compress JSON into compact base64 URI-friendly notation",
-  "main": "index.js",
+  "main": "dist/json-url/index.js",
   "scripts": {
-    "test": "./node_modules/.bin/mocha test.js"
+    "lint": "eslint src/*",
+    "compile": "rm -rf dist/; babel --plugins transform-runtime,add-module-exports -d dist/ src/",
+    "prepublish": "npm test && npm run compile",
+    "test": "BABEL_ENV=test nyc mocha --timeout 120000",
+    "perf": "babel-node src/perf.js"
   },
   "repository": {
     "type": "git",
@@ -13,14 +17,30 @@
   "author": "Benjamin Goh <masotime@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "lzma": "^2.1.9",
-    "msgpack5": "^3.3.0",
+    "babel-runtime": "^6",
+    "lzma": "^2.3.2",
+    "msgpack5": "^3.5.1",
     "node-lzw": "^0.3.1",
     "urlsafe-base64": "^1.0.0"
   },
   "devDependencies": {
+    "babel-cli": "^6",
+    "babel-core": "^6.26.0",
+    "babel-eslint": "^7",
+    "babel-plugin-add-module-exports": "^0",
+    "babel-plugin-istanbul": "^4.1.4",
+    "babel-plugin-module-resolver": "^2",
+    "babel-plugin-transform-runtime": "^6",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6",
+    "babel-preset-stage-0": "^6",
     "bluebird": "^3.0.6",
+    "coveralls": "^2.13.1",
+    "eslint": "^3",
+    "eslint-import-resolver-babel-module": "^2",
+    "eslint-plugin-import": "^2",
     "expect": "^1.13.1",
-    "mocha": "^2.3.4"
+    "mocha": "^2.3.4",
+    "nyc": "^11.2.1"
   }
 }

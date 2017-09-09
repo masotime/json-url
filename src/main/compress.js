@@ -2,10 +2,8 @@
 // Both lzma and node-lzw modules probably return arrays
 // rather than buffers for the sake of client-side Javascript support.
 
-'use strict';
-
-var lzma = require('lzma'),
-	lzw = require('node-lzw');
+import lzma from 'lzma';
+import lzw from 'node-lzw';
 
 function safeCallback(operation, cb) {
 	try {
@@ -15,7 +13,7 @@ function safeCallback(operation, cb) {
 	}
 }
 
-module.exports = {
+export default {
 	lzw: {
 		compress: function(buffer, ratio, cb) {
 			safeCallback(function () { return new Buffer(lzw.encode(buffer)); }, cb);
