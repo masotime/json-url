@@ -42,7 +42,7 @@
     "eslint-import-resolver-babel-module": "^2",
     "eslint-plugin-import": "^2",
     "expect": "^1.13.1",
-    "mocha": "^2.3.4",
+    "mocha": "^3.5.0",
     "nyc": "^11.2.1"
   }
 }
