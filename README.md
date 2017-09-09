@@ -12,29 +12,29 @@ Generate a URL-friendly representations of some arbtirary JSON data in as small 
 ### Compress
 
 ```
-	var codec = require('json-url')('lzw');
-	var obj = { one: 1, two: 2, three: [1,2,3], four: 'red pineapples' };
-	codec.compress(obj).then(result => console.log(result));
+  var codec = require('json-url')('lzw');
+  var obj = { one: 1, two: 2, three: [1,2,3], four: 'red pineapples' };
+  codec.compress(obj).then(result => console.log(result));
 ```
 
 ### Decompress
 
 ```
-	var codec = require('json-url')('lzma');
-	codec.decompress(someCompressedString).then(json => { /* operate on json */ })
+  var codec = require('json-url')('lzma');
+  codec.decompress(someCompressedString).then(json => { /* operate on json */ })
 ```
 
 ### Stats
 
 ```
-	var codec = require('json-url')('lzstring');
-	codec.stats(obj).then(
-		({ rawencoded, compressedencoded, compression }) => {
-			console.log(`Raw URI-encoded JSON string length: ${rawencoded}`);
-			console.log(`Compressed URI-encoded JSON string length: ${compressedencoded}`);
-			console.log(`Compression ratio (raw / compressed): ${compression}`);
-		}
-	);
+  var codec = require('json-url')('lzstring');
+  codec.stats(obj).then(
+    ({ rawencoded, compressedencoded, compression }) => {
+      console.log(`Raw URI-encoded JSON string length: ${rawencoded}`);
+      console.log(`Compressed URI-encoded JSON string length: ${compressedencoded}`);
+      console.log(`Compression ratio (raw / compressed): ${compression}`);
+    }
+  );
 ```
 
 ## Motivation
