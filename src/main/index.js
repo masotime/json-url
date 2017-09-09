@@ -1,58 +1,46 @@
 import msgpackFactory from 'msgpack5';
 import safe64 from 'urlsafe-base64';
 
-import apis from 'main/compress';
+import ALGORITHMS from 'main/compress';
 
-const algorithm = 'lzma';
-const msgpack = msgpackFactory();
+const twoDigitPercentage = val => Math.floor((val * 10000) / 100);
 
-function compress(json, cb) {
-	const packed = msgpack.encode(json);
+export default function createClient(algorithm) {
+	if (!ALGORITHMS.hasOwnProperty(algorithm)) throw new Error(`No such algorithm ${algorithm}`);
 
-	apis[algorithm].compress(packed, 9, function onComplete(err, result) {
-		if (err) {
-			return cb(err);
-		}
-		
-		try {
-			return cb(null, safe64.encode(result));		
-		} catch(e) {
-			return cb(e);
-		}
-		
-	});
-}
+	const { pack, encode } = ALGORITHMS[algorithm];
+	const msgpack = msgpackFactory();
 
-function decompress(compressed, cb) {
-	apis[algorithm].decompress(safe64.decode(compressed), function onComplete(err, result) {
-		if (err) {
-			return cb(err);
-		}
-
-		try {
-			return cb(null, msgpack.decode(result));
-		} catch (e) {
-			return cb(e);
-		}
-	});
-}
-
-export default {
-	compress: compress,
-	decompress : decompress,
-	stats: function (json, cb) {
-		var stringified = typeof json !== 'string' ? JSON.stringify(json) : json,
-			rawencoded = encodeURIComponent(stringified);
-
-		compress(json, function(err, result) {
-			if (err) return cb(err);
-
-			cb(null, {
-				rawencoded: rawencoded.length,
-				compressedencoded: result.length,
-				ratio: (Math.floor(result.length / rawencoded.length * 10000) / 100)
-			});
-		});
-
+	async function compress(json) {
+		const packed = pack ? msgpack.encode(json) : JSON.stringify(json);
+		console.log('Uncompressed buffer after packing', packed);
+		const compressed = await ALGORITHMS[algorithm].compress(packed);
+		console.log('Compressed buffer after packing', compressed);
+		const encoded = encode ? safe64.encode(compressed) : compressed;
+		console.log('Encoded string after encoding', encoded);
+		return encoded;
 	}
-};
+
+	async function decompress(string) {
+		const decoded = encode ? safe64.decode(string) : string;
+		console.log('Decoded Buffer', decoded);
+		const decompressed = await ALGORITHMS[algorithm].decompress(decoded);
+		console.log('Decompressed buffer before unpacking', decompressed);
+		const unpacked = pack ? msgpack.decode(decompressed) : JSON.parse(decompressed);
+		console.log('Unpacked JSON', unpacked);
+		return unpacked;
+	}
+
+	async function stats(json) {
+		const rawencoded = encodeURIComponent(JSON.stringify(json));
+		const compressed = await compress(json);
+
+		return {
+			rawencoded: rawencoded.length,
+			compressedencoded: compressed.length,
+			compression: twoDigitPercentage(rawencoded.length / compressed.length * 10000)
+		};
+	}
+
+	return { compress, decompress, stats };
+}

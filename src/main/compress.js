@@ -4,42 +4,38 @@
 
 import lzma from 'lzma';
 import lzw from 'node-lzw';
-
-function safeCallback(operation, cb) {
-	try {
-		return cb(null, operation());
-	} catch(err) {
-		return cb(err);
-	}
-}
+import lzstring from 'lz-string';
+import Promise from 'bluebird';
 
 export default {
 	lzw: {
-		compress: function(buffer, ratio, cb) {
-			safeCallback(function () { return new Buffer(lzw.encode(buffer)); }, cb);
-		},
-		decompress: function(buffer, cb) {
-			safeCallback(function () { return new Buffer(lzw.decode(buffer)); }, cb);
-		}
+		pack: true,
+		encode: true,
+		compress: async input => new Buffer(lzw.encode(input)),
+		decompress: async input => lzw.decode(new Buffer(input))
 	},
 	lzma: {
-		compress: function(buffer, ratio, cb) {
-			try {
-				lzma.compress(buffer, ratio, function onComplete(byteArray) {
-					safeCallback(function () { return new Buffer(byteArray); }, cb);
-				});
-			} catch (err) {
-				cb(err);
-			}
-		},
-		decompress: function(buffer, cb) {
-			try {
-				lzma.decompress(buffer, function onComplete(byteArray) {
-					safeCallback(function () { return new Buffer(byteArray); }, cb);
-				});
-			} catch (err) {
-				cb(err);
-			}
-		}
+		pack: true,
+		encode: true,
+		compress: async input =>
+			new Promise((ok, fail) =>
+				lzma.compress(input, 9, (byteArray, err) => {
+					if (err) return fail(err);
+					return ok(new Buffer(byteArray));
+				})
+			),
+		decompress: async input =>
+			new Promise((ok, fail) =>
+				lzma.decompress(input, (byteArray, err) => {
+					if (err) return fail(err);
+					return ok(new Buffer(byteArray));
+				})
+			)
+	},
+	lzstring: {
+		pack: false,
+		encode: true,
+		compress: async string => new Buffer(lzstring.compress(string)),
+		decompress: async buffer => lzstring.decompress(buffer.toString())
 	}
-};
+}
