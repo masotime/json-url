@@ -8,7 +8,8 @@
     "compile": "rm -rf dist/; babel --plugins transform-runtime,add-module-exports -d dist/ src/",
     "prepublish": "npm test && npm run compile",
     "test": "BABEL_ENV=test nyc mocha --timeout 120000",
-    "perf": "babel-node src/perf.js"
+    "perf": "babel-node src/perf.js",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "repository": {
     "type": "git",
