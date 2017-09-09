@@ -4,23 +4,6 @@
 
 Generate a URL-friendly representations of some arbtirary JSON data in as small a space as possible.
 
-## Motivation
-
-Typically when you want to shorten a long URL with large amounts of data parameters, the approach is to generate a "short URL" where compression is achieved by using a third-party service which stores the true URL and redirects the user (e.g. bit.ly or goo.gl).
-
-However, if you want to:
-
-* share bookmarks with virtually unlimited combinations of state and/or
-* want to avoid the third-party dependency
-
-you would encode the data structure (typically JSON) in your URL, but this often results in very large URLs.
-
-This approach differs by removing that third-party dependency and encodes it using common compression algorithms such as LZW or LZMA.
-
-Note: It is arguable that a custom dictionary / domain specific encoding would ultimately provide better compression, but here we want to
-* avoid maintaining such a dictionary and/or
-* retain cross-application compatibility (otherwise you need a shared dictionary)
-
 ## Usage
 
 * Although not all algorithms are asynchronous, all functions return Promises to ensure compatibility.
@@ -54,6 +37,23 @@ Note: It is arguable that a custom dictionary / domain specific encoding would u
 	);
 ```
 
+## Motivation
+
+Typically when you want to shorten a long URL with large amounts of data parameters, the approach is to generate a "short URL" where compression is achieved by using a third-party service which stores the true URL and redirects the user (e.g. bit.ly or goo.gl).
+
+However, if you want to:
+
+* share bookmarks with virtually unlimited combinations of state and/or
+* want to avoid the third-party dependency
+
+you would encode the data structure (typically JSON) in your URL, but this often results in very large URLs.
+
+This approach differs by removing that third-party dependency and encodes it using common compression algorithms such as LZW or LZMA.
+
+Note: It is arguable that a custom dictionary / domain specific encoding would ultimately provide better compression, but here we want to
+* avoid maintaining such a dictionary and/or
+* retain cross-application compatibility (otherwise you need a shared dictionary)
+
 ## Approach
 
 I explored several options, the most popular one being [MessagePack][1]. However, I noticed that it did not give the best possible compression as compared to [LZMA][2] and [LZW][3].
@@ -65,10 +65,6 @@ For small JS objects, LZW largely outperformed LZMA, but for the most part you'd
 In addition, there is now support for [LZSTRING][5], although the URI encoding still uss urlsafe-base64 because LZSTRING still uses unsafe characters via their `compressToURIEncodedString` method - notably the [`+` character][6]
 
 Finally, I went with [urlsafe-base64][4] to encode it in a URL-friendly format.
-
-## TODO
-
-Add tests
 
 [1]: http://msgpack.org/index.html
 [2]: https://www.npmjs.com/package/lzma
