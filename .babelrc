@@ -7,5 +7,5 @@
 		"test": {
 			"plugins": ["istanbul"]
 		}
-	}	
+	}
 }

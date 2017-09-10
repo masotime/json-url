@@ -37,5 +37,11 @@ export default {
 		encode: true,
 		compress: async string => Buffer.from(lzstring.compressToUint8Array(string)),
 		decompress: async buffer => lzstring.decompressFromUint8Array(buffer)
+	},
+	pack: {
+		pack: true,
+		encode: true,
+		compress: async _ => _,
+		decompress: async _ => _
 	}
 }

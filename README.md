@@ -6,15 +6,13 @@ Generate a URL-friendly representations of some arbtirary JSON data in as small 
 
 ## Usage
 
-* Although not all algorithms are asynchronous, all functions return Promises to ensure compatibility.
-* Instantiate an instance with appropriate compression codec ("lzw", "lzma", "lzstring") before using.
-
 ### Compress
 
 ```
   var codec = require('json-url')('lzw');
   var obj = { one: 1, two: 2, three: [1,2,3], four: 'red pineapples' };
   codec.compress(obj).then(result => console.log(result));
+  /* Result: woTCo29uZQHCo3R3bwLCpXRocmVlwpMBAgPCpGZvdXLCrsSOZCBwacSDYXBwbGVz */
 ```
 
 ### Decompress
@@ -36,6 +34,16 @@ Generate a URL-friendly representations of some arbtirary JSON data in as small 
     }
   );
 ```
+
+## Usage Notes
+
+* Although not all algorithms are asynchronous, all functions return Promises to ensure compatibility.
+* Instantiate an instance with appropriate compression codec before using.
+* Valid codecs:
+  * lzw
+  * lzma
+  * lzstring
+  * pack
 
 ## Motivation
 

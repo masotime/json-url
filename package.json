@@ -7,7 +7,9 @@
     "lint": "eslint src/*",
     "compile": "rm -rf dist/; babel --plugins transform-runtime,add-module-exports -d dist/ src/",
     "prepublish": "npm test && npm run compile",
-    "test": "BABEL_ENV=test nyc mocha test/index.js --timeout 120000",
+    "test": "npm run lint && npm run test:node && npm run test:karma",
+    "test:node": "BABEL_ENV=test nyc mocha test/index.js --timeout 120000",
+    "test:karma": "karma start --single-run",
     "perf": "babel-node test/perf.js",
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
@@ -30,6 +32,7 @@
     "babel-cli": "^6",
     "babel-core": "^6.26.0",
     "babel-eslint": "^7",
+    "babel-loader": "^7.1.2",
     "babel-plugin-add-module-exports": "^0",
     "babel-plugin-istanbul": "^4.1.4",
     "babel-plugin-module-resolver": "^2",
@@ -41,8 +44,13 @@
     "eslint": "^3",
     "eslint-import-resolver-babel-module": "^2",
     "eslint-plugin-import": "^2",
-    "expect": "^1.13.1",
+    "karma": "^1.7.1",
+    "karma-chrome-launcher": "^2.2.0",
+    "karma-mocha": "^1.3.0",
+    "karma-webpack": "^2.0.4",
     "mocha": "^3.5.0",
-    "nyc": "^11.2.1"
+    "nyc": "^11.2.1",
+    "uglifyjs-webpack-plugin": "^0.4.6",
+    "webpack": "^3.5.6"
   }
 }

@@ -12,9 +12,10 @@ async function main() {
 		const lib = jsonUrl(algorithm);
 		let counter = 0;
 		for (const datum of samples) {
-			const { rawencoded, compressedencoded, compression } = await lib.stats(datum);
+			const { raw, rawencoded, compressedencoded, compression } = await lib.stats(datum);
 			results[counter] = results[counter] || {};
-			results[counter].original = rawencoded;
+			results[counter].raw = raw;
+			results[counter].rawencoded = rawencoded;
 			results[counter][algorithm] = {
 				ratio: compression,
 				compressed: compressedencoded

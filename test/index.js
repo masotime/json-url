@@ -4,51 +4,32 @@ import createClient from 'main';
 import { validate } from 'urlsafe-base64';
 import samples from './samples.json'
 
-const DATA = {
-	json: {
-		"filters": {
-			"amenities": [4, 55, 23],
-			"budget_max": 80000,
-			"budget_min": 50000,
-			"event_types": [1, 2, 3],
-			"neighborhoods": [4, 55, 502],
-		},
-		"page": 1,
-		"search_fields": {
-			"end_time": "11:00pm",
-			"guests": "50",
-			"region": 8,
-			"start_date": "11-23-2015",
-			"start_time": "8:00pm"
-		},
-		"search_for_name": "Name Search Test"
-	}
-};
-
-DATA.json = {
-	simple: 'string'
-};
+describe('a test', () => {
+	it('should work', () => {
+		assert.ok(true);
+	});
+});
 
 describe('json-url', () => {
 	samples.forEach(sample => {
 		describe(`When attempting to compress ${JSON.stringify(sample).slice(0, 50)}...`, () => {
-			['lzw', 'lzma', 'lzstring'].forEach(algorithm => {
+			['pack', 'lzw', 'lzma', 'lzstring'].forEach(algorithm => {
 				describe(`using the ${algorithm} algorithm`, () => {
 					const { compress, decompress, stats} = createClient(algorithm);
 
 					it('compresses JSON via #compress to base64 format', async () => {
-						const compressed = await compress(DATA.json);
+						const compressed = await compress(sample);
 						assert.ok(validate(compressed), `${compressed} is not valid base64`);
 					});
 
 					it('can decompress JSON compressed via #compress using #decompress', async () => {
-						const compressed = await compress(DATA.json);
+						const compressed = await compress(sample);
 						const decompressed = await decompress(compressed);
-						assert.equal(JSON.stringify(decompressed), JSON.stringify(DATA.json));
+						assert.equal(JSON.stringify(decompressed), JSON.stringify(sample));
 					});
 
 					it('returns stats { rawencoded, compressedencoded, compression } via #stats', async () => {
-						const result = await stats(DATA.json);
+						const result = await stats(sample);
 						assert.ok(result['rawencoded']);
 						assert.ok(result['compressedencoded']);
 						assert.ok(result['compression']);

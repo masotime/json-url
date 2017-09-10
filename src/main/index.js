@@ -26,10 +26,12 @@ export default function createClient(algorithm) {
 	}
 
 	async function stats(json) {
-		const rawencoded = encodeURIComponent(JSON.stringify(json));
+		const raw = JSON.stringify(json);
+		const rawencoded = encodeURIComponent(raw);
 		const compressed = await compress(json);
 
 		return {
+			raw: raw.length,
 			rawencoded: rawencoded.length,
 			compressedencoded: compressed.length,
 			compression: twoDigitPercentage(rawencoded.length / compressed.length)
