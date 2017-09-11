@@ -1,0 +1,154 @@
+<!doctype html>
+<html>
+	<head>
+		<title>json-url demo page</title>
+		<style type="text/css">
+			body {
+				padding: 0;
+				margin: 0;
+				font-family: Helvetica Neue, Segoe UI, Roboto, sans-serif;
+			}
+
+			header {
+				font-family: Iowan Old Style, serif;
+				margin: 0;
+				padding: 1em 0;
+				background-color: #333;
+				text-align: center;
+				color: white;
+			}
+
+			header > h1 {
+				margin: 0;
+			}
+
+			#container {
+				padding: 1em;
+			}
+
+
+			*, input, button, select {
+				box-sizing: border-box;
+			}
+
+			label {
+				width: 10em;
+				display: inline-block;
+				vertical-align: top;
+			}
+
+			input, button, select, textarea {
+				border: 1px solid #333;
+				border-radius: .2em;
+				padding: .2em;
+				font-size: 16px;
+			}
+
+			#json {
+				width: 30em;
+				height: 10em;
+				font-family: Menlo, monospace;
+			}
+
+			button {
+				background-color: #ccc;
+				padding: .2em 1em;
+				transition: .2s ease;
+			}
+
+			button:hover, button:focus {
+				background-color: #eee;
+				cursor: pointer;
+			}
+
+
+			#container > div {
+				margin-bottom: .5em;
+			}
+
+			#result, #decompressed {
+				font-family: Menlo, monospace;
+				background-color: #eee;
+				min-height: 10em;
+				padding: 0.5em;
+				border-radius: .2em;
+				width: 100%;
+			}
+
+			footer {
+				background-color :#333;
+				color: white;
+				position: fixed;
+				bottom: 0;
+				left: 0;
+				display: block;
+				width: 100%;
+				text-align: center;
+			}
+		</style>
+	</head>
+	<body>
+		<header>
+			<h1>json-url demo</h1>
+			<small>Proudly written in vanilla.js&trade;</small>
+		</header>
+		<div id="container">
+			<div>
+				<label for="algorithm">Algorithm</label>
+				<select id="algorithm" name="algorithm">
+					<option value="lzw">lzw</option>
+					<option value="lzma">lzma</option>
+					<option value="lzstring">lzstring</option>
+					<option value="pack">pack</option>
+				</select>
+			</div>
+			<div>
+				<label for="json">JSON Input</label>
+				<textarea id="json" name="json"></textarea>
+			</div>
+			<button id="generate" type="button">Generate</button>
+			<div>
+				<h3>Result</h3>
+				<textarea class="intput-output" id="result">
+				</textarea>
+			</div>
+			<button id="decompress" type="button">Decompress</button>
+			<div>
+				<h3>Decompression</h3>
+				<textarea class="input-output" id="decompressed">
+				</textarea>
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="https://unpkg.com/json-url@2.2.0/dist/browser/json-url.js"></script>
+	<script>
+		json.value = JSON.stringify({
+			roses: 'red',
+			violets: 'blue',
+			fruits: [ 'apple', 2 ]
+		}, null, 2);
+			algorithm.addEventListener('change', () => {
+				result.value = '';
+				decompressed.value = '';
+				generate.click();
+			});
+			generate.addEventListener('click', () => {
+				try {
+					const parsed = JSON.parse(json.value);
+					const lib = JsonUrl(algorithm.value);
+					lib.compress(parsed).then(output => { result.value = output; });
+				} catch (err) {
+					result.value = `Unable to compress. Reason: ${err}`;
+				}
+			});
+			decompress.addEventListener('click', () => {
+				try {
+					const compressed = result.value.trim();
+					const lib = JsonUrl(algorithm.value);
+					lib.decompress(compressed).then(output => { decompressed.value = JSON.stringify(output, null, 2); })
+				} catch (err) {
+					decompressed.value = `Unable to decompress. Reason: ${err}`;
+				}
+			});
+	</script>
+</html>
