@@ -4,7 +4,10 @@ const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 module.exports = {
 	entry: './src/main/index.js',
 	output: {
-		filename: 'browser.js',
+		library: 'JsonUrl',
+		libraryTarget: 'umd',
+		libraryExport: 'default',
+		filename: 'browser/json-url.js',
 		path: __dirname + '/dist'
 	},
 	module: {

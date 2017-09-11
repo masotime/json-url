@@ -2,48 +2,62 @@
 
 [![npm downloads][downloads-image]][downloads-url] [![Build Status][travis-image]][travis-url] [![Dependency Status][daviddm-image]][daviddm-url] [![Coverage Status][coverage-image]][coverage-url]
 
-Generate a URL-friendly representations of some arbtirary JSON data in as small a space as possible.
+Generate URL-safe representations of some arbtirary JSON data in as small a space as possible that can be shared in a bookmark / link.
+
+Although designed to work in Node, a standalone client-side library is provided that can be used directly on the browser.
 
 ## Usage
 
 ### Compress
 
 ```
-  var codec = require('json-url')('lzw');
-  var obj = { one: 1, two: 2, three: [1,2,3], four: 'red pineapples' };
-  codec.compress(obj).then(result => console.log(result));
-  /* Result: woTCo29uZQHCo3R3bwLCpXRocmVlwpMBAgPCpGZvdXLCrsSOZCBwacSDYXBwbGVz */
+	var codec = require('json-url')('lzw');
+	var obj = { one: 1, two: 2, three: [1,2,3], four: 'red pineapples' };
+	codec.compress(obj).then(result => console.log(result));
+	/* Result: woTCo29uZQHCo3R3bwLCpXRocmVlwpMBAgPCpGZvdXLCrsSOZCBwacSDYXBwbGVz */
 ```
 
 ### Decompress
 
 ```
-  var codec = require('json-url')('lzma');
-  codec.decompress(someCompressedString).then(json => { /* operate on json */ })
+	var codec = require('json-url')('lzma');
+	codec.decompress(someCompressedString).then(json => { /* operate on json */ })
 ```
 
 ### Stats
 
 ```
-  var codec = require('json-url')('lzstring');
-  codec.stats(obj).then(
-    ({ rawencoded, compressedencoded, compression }) => {
-      console.log(`Raw URI-encoded JSON string length: ${rawencoded}`);
-      console.log(`Compressed URI-encoded JSON string length: ${compressedencoded}`);
-      console.log(`Compression ratio (raw / compressed): ${compression}`);
-    }
-  );
+	var codec = require('json-url')('lzstring');
+	codec.stats(obj).then(
+		({ rawencoded, compressedencoded, compression }) => {
+			console.log(`Raw URI-encoded JSON string length: ${rawencoded}`);
+			console.log(`Compressed URI-encoded JSON string length: ${compressedencoded}`);
+			console.log(`Compression ratio (raw / compressed): ${compression}`);
+		}
+	);
 ```
+
+### Standalone Browser Bundle
+
+```
+<script type="text/javascript" src="/dist/browser/json-url.js"></script>
+<script>
+	const lib = JsonUrl('lzma'); // JsonUrl is added to the window object
+	lib.compress(parsed).then(output => { result.value = output; });
+</script>
+```
+
+To see it in action, download the source code and run `npm run example`.
 
 ## Usage Notes
 
 * Although not all algorithms are asynchronous, all functions return Promises to ensure compatibility.
 * Instantiate an instance with appropriate compression codec before using.
 * Valid codecs:
-  * lzw
-  * lzma
-  * lzstring
-  * pack
+	* lzw
+	* lzma
+	* lzstring - runs lzstring against a stringified JSON instead of using MessagePack on JSON
+	* pack - this just uses MessagePack and converts the binary buffer into a Base64 URL-safe representation, without any other compression
 
 ## Motivation
 
@@ -73,6 +87,10 @@ For small JS objects, LZW largely outperformed LZMA, but for the most part you'd
 In addition, there is now support for [LZSTRING][5], although the URI encoding still uss urlsafe-base64 because LZSTRING still uses unsafe characters via their `compressToURIEncodedString` method - notably the [`+` character][6]
 
 Finally, I went with [urlsafe-base64][4] to encode it in a URL-friendly format.
+
+## TODO
+
+The Browser bundle is far too big. Need to optimize the webpack build process.
 
 [1]: http://msgpack.org/index.html
 [2]: https://www.npmjs.com/package/lzma

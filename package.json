@@ -2,16 +2,20 @@
   "name": "json-url",
   "version": "2.1.1",
   "description": "Compress JSON into compact base64 URI-friendly notation",
-  "main": "dist/json-url/index.js",
+  "main": "dist/index.js",
+  "browser": "dist/browser/json-url.js",
   "scripts": {
     "lint": "eslint src/*",
-    "compile": "rm -rf dist/; babel --plugins transform-runtime,add-module-exports -d dist/ src/",
+    "compile": "rm -rf dist/ & wait & npm run compile:node & npm run compile:webpack",
+    "compile:node": "babel --plugins transform-runtime,add-module-exports -d dist src/main/* && mv dist/src/main/* dist && rm -rf dist/src",
+    "compile:webpack": "webpack",
     "prepublish": "npm test && npm run compile",
     "test": "npm run lint && npm run test:node && npm run test:karma",
     "test:node": "BABEL_ENV=test nyc mocha test/index.js --timeout 120000",
     "test:karma": "karma start --single-run",
     "perf": "babel-node test/perf.js",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "example": "open http://localhost:8000/examples/browser/test.html & static-server --port 8000"
   },
   "repository": {
     "type": "git",
@@ -50,6 +54,7 @@
     "karma-webpack": "^2.0.4",
     "mocha": "^3.5.0",
     "nyc": "^11.2.1",
+    "static-server": "^2.0.5",
     "uglifyjs-webpack-plugin": "^0.4.6",
     "webpack": "^3.5.6"
   }

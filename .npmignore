@@ -1,6 +1,7 @@
 *.log
 src/
 test/
+examples/
 .DS_Store
 coverage/
 .nyc_output/
