@@ -1,11 +1,18 @@
 {
 	"presets": ["es2015", "stage-0"],
 	"plugins": [
-		["module-resolver", {"root": ["src"]}]
+		["module-resolver", {
+			"root": ["src"],
+			"transformFunctions": ["require", "require.resolve", "import"]
+			}
+		],
+		"dynamic-import-node"
 	],
 	"env": {
 		"test": {
-			"plugins": ["istanbul"]
+			"plugins": [
+				"istanbul"
+			]
 		}
 	}
 }

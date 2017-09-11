@@ -7,8 +7,9 @@ module.exports = {
 		library: 'JsonUrl',
 		libraryTarget: 'umd',
 		libraryExport: 'default',
-		filename: 'browser/json-url.js',
-		path: __dirname + '/dist'
+		filename: 'json-url.js',
+		chunkFilename: 'json-url-[name].js',
+		path: __dirname + '/dist/browser'
 	},
 	module: {
 		rules: [
@@ -18,17 +19,25 @@ module.exports = {
 				use: {
 					loader: 'babel-loader',
 					options: {
-						plugins: ['transform-runtime']
+						babelrc: false,
+						presets: ['es2015', 'stage-0'],
+						plugins: [
+							'syntax-dynamic-import',
+							['module-resolver',
+								{
+									root: ["src"],
+									alias: {
+										lzma: require.resolve('lzma/src/lzma_worker-min'),
+										bluebird: require.resolve('bluebird/js/browser/bluebird.core.min.js')
+									}
+								}
+							],
+							'transform-runtime',
+						]
 					}
 				}
 			}
 		],
-	},
-	resolve: {
-		alias: {
-			'lzma$': require.resolve('./src/webpack/lzma'),
-			'bluebird$': require.resolve('./src/webpack/bluebird')
-		}
 	},
 	plugins: [
 		new UglifyJSPlugin({
