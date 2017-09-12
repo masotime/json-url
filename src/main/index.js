@@ -1,4 +1,5 @@
 import ALGORITHMS from 'main/codecs';
+import LOADERS from 'main/loaders';
 
 const twoDigitPercentage = val => Math.floor(val * 10000) / 10000;
 
@@ -7,26 +8,17 @@ export default function createClient(algorithm) {
 
 	const { pack, encode } = ALGORITHMS[algorithm];
 
-	const msgpackPromise = (async function getMsgPack() {
-		const msgpackFactory = await import(/* webpackChunkName: "msgpack" */ 'msgpack5');
-		return msgpackFactory();
-	}());
-
-	const safe64Promise = (async function getSafe64() {
-		return await import(/* webpackChunkName: "safe64" */ 'urlsafe-base64');
-	}());
-
 	async function compress(json) {
-		const packed = pack ? (await msgpackPromise).encode(json) : JSON.stringify(json);
+		const packed = pack ? (await LOADERS.msgpack()).encode(json) : JSON.stringify(json);
 		const compressed = await ALGORITHMS[algorithm].compress(packed);
-		const encoded = encode ? (await safe64Promise).encode(compressed) : compressed;
+		const encoded = encode ? (await LOADERS.safe64()).encode(compressed) : compressed;
 		return encoded;
 	}
 
 	async function decompress(string) {
-		const decoded = encode ? (await safe64Promise).decode(string) : string;
+		const decoded = encode ? (await LOADERS.safe64()).decode(string) : string;
 		const decompressed = await ALGORITHMS[algorithm].decompress(decoded);
-		const unpacked = pack ? (await msgpackPromise).decode(decompressed) : JSON.parse(decompressed);
+		const unpacked = pack ? (await LOADERS.msgpack()).decode(decompressed) : JSON.parse(decompressed);
 		return unpacked;
 	}
 

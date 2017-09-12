@@ -8,7 +8,7 @@
     "lint": "eslint src/*",
     "compile": "rm -rf dist/; mkdir dist & wait & npm run compile:node & npm run compile:webpack",
     "compile:node": "babel --plugins transform-runtime,add-module-exports -d dist/node --sourceRoot src src/main",
-    "compile:webpack": "webpack && cp dist/browser/* examples/browser",
+    "compile:webpack": "webpack",
     "prepublish": "npm test && npm run compile",
     "test": "npm run lint && npm run test:node && npm run test:karma",
     "test:node": "BABEL_ENV=test nyc mocha test/index.js --timeout 120000",

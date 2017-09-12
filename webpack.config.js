@@ -2,7 +2,7 @@
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 
 module.exports = {
-	entry: './src/main/index.js',
+	entry: './src/main/browser-index.js',
 	output: {
 		library: 'JsonUrl',
 		libraryTarget: 'umd',
