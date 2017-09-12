@@ -47,7 +47,7 @@ Although designed to work in Node, a standalone client-side library is provided 
 </script>
 ```
 
-To see it in action, download the source code and run `npm run example`, or simply visit [http://jsbin.com/cayuhox](this JSBIN).
+To see it in action, download the source code and run `npm run example`, or simply visit [this JSBIN](http://jsbin.com/cayuhox).
 
 * The browser bundle is generated using Webpack and consists of multiple chunks, with the main chunk entry point being located at [dist/browser/json-url.js](dist/browser/json-url.js). Chunks must be located in the same folder as the main module itself.
 * I've tried my best to reduce the bundle sizes, but the module (at least the entry) is still surprisingly large on the browser (56kb minified, 20kb gzipped). Most of it is due to the buffer.js shim, and partly due to the regenerator-runtime - I may revisit this later to try and improve efficiency.
