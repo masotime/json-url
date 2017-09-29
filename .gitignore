@@ -1,6 +1,5 @@
 node_modules
 *.log
-dist/
 .DS_Store
 coverage/
 .nyc_output/
