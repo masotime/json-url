@@ -1,6 +1,9 @@
 /* eslint-disable import/unambiguous */
 const webpackConfig = require('./webpack.config.js');
 
+// karma-webpack 2.x breaking fix
+delete webpackConfig.entry;
+
 // note: these mods mutate the original config
 const MODS = { // eslint-disable-line no-unused-vars
 	dontAliasLzma(config) {
