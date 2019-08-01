@@ -1,5 +1,4 @@
 *.log
-src/
 test/
 examples/
 .DS_Store
