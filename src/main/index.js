@@ -4,7 +4,7 @@ import LOADERS from 'main/loaders';
 const twoDigitPercentage = val => Math.floor(val * 10000) / 10000;
 
 export default function createClient(algorithm) {
-	if (!ALGORITHMS.hasOwnProperty(algorithm)) throw new Error(`No such algorithm ${algorithm}`);
+	if (!Object.prototype.hasOwnProperty.call(ALGORITHMS, algorithm)) throw new Error(`No such algorithm ${algorithm}`);
 
 	const { pack, encode } = ALGORITHMS[algorithm];
 

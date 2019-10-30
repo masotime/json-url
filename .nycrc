@@ -1,6 +1,6 @@
 {
 	"include": [ "src/**/*.js" ],
-	"require": [ "babel-core/register", "babel-polyfill" ],
+	"require": [ "@babel/register", "@babel/polyfill" ],
 	"sourceMap": false,
 	"instrument": false,
 	"reporter": [ "text", "lcov" ]

@@ -1,8 +1,9 @@
 // centralize all chunks in one file
 export default {
 	async msgpack() {
-		const msgpackFactory = await import(/* webpackChunkName: "msgpack" */ 'msgpack5');
-		return msgpackFactory();
+		const module = await import(/* webpackChunkName: "msgpack" */ 'msgpack5');
+		const factory = module.default || module;
+		return factory();
 	},
 	async safe64() {
 		return await import(/* webpackChunkName: "safe64" */ 'urlsafe-base64');
@@ -17,6 +18,8 @@ export default {
 		return await import(/* webpackChunkName: "lzstring" */ 'lz-string');
 	},
 	async lzw() {
-		return await import(/* webpackChunkName: "lzw" */ 'node-lzw');
+		const module = await import(/* webpackChunkName: "lzw" */ 'node-lzw');
+		const lzw = module.default || module;
+		return lzw;
 	}
 };

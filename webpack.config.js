@@ -20,9 +20,9 @@ module.exports = {
 					loader: 'babel-loader',
 					options: {
 						babelrc: false,
-						presets: ['es2015', 'stage-0'],
+						presets: ['@babel/preset-env'],
 						plugins: [
-							'syntax-dynamic-import',
+							'@babel/plugin-syntax-dynamic-import',
 							['module-resolver',
 								{
 									root: ["src"],
@@ -32,7 +32,7 @@ module.exports = {
 									}
 								}
 							],
-							'transform-runtime',
+							'@babel/plugin-transform-runtime',
 						]
 					}
 				}
