@@ -1,6 +1,6 @@
 {
 	"name": "json-url",
-	"version": "2.4.2",
+	"version": "2.5.0",
 	"description": "Compress JSON into compact base64 URI-friendly notation",
 	"main": "dist/node/index.js",
 	"module": "src/main/index.js",
