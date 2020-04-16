@@ -39,12 +39,18 @@ module.exports = {
 			}
 		],
 	},
+	node: {
+		global: false
+	},
 	plugins: [
 		new UglifyJSPlugin({
 			comments: false
 		}),
 		new webpack.optimize.LimitChunkCountPlugin({
 			maxChunks: 1
+		}),
+		new webpack.DefinePlugin({
+			 global: 'window'
 		})
 	]
 };
