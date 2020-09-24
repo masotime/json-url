@@ -87,7 +87,7 @@ At first I tried to apply the binary compression directly on a stringified JSON,
 
 For small JS objects, LZW largely outperformed LZMA, but for the most part you'd probably be looking to compress large JSON data rather than small amounts (otherwise a simple stringify + base64 is sufficient). You can choose to use whatever codec suits you best.
 
-In addition, there is now support for [LZSTRING][5], although the URI encoding still uss urlsafe-base64 because LZSTRING still uses unsafe characters via their `compressToURIEncodedString` method - notably the [`+` character][6]
+In addition, there is now support for [LZSTRING][5], although the URI encoding still uses urlsafe-base64 because LZSTRING still uses unsafe characters via their `compressToURIEncodedString` method - notably the [`+` character][6]
 
 Finally, I went with [urlsafe-base64][4] to encode it in a URL-friendly format.
 
