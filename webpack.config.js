@@ -1,5 +1,5 @@
 /* eslint-disable import/unambiguous */
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	entry: './src/main/browser-index.js',
@@ -39,9 +39,9 @@ module.exports = {
 			}
 		],
 	},
-	plugins: [
-		new UglifyJSPlugin({
-			comments: false
-		})
-	]
+	mode: 'production',
+	optimization: {
+		minimize: true,
+		minimizer: [new TerserPlugin()]
+	}
 };

@@ -1,6 +1,6 @@
 /* eslint-disable import/unambiguous */
 const webpack = require('webpack');
-const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
 
 module.exports = {
 	entry: './src/main/browser-index.js',
@@ -43,14 +43,16 @@ module.exports = {
 		global: false
 	},
 	plugins: [
-		new UglifyJSPlugin({
-			comments: false
-		}),
 		new webpack.optimize.LimitChunkCountPlugin({
 			maxChunks: 1
 		}),
 		new webpack.DefinePlugin({
 			 global: 'window'
 		})
-	]
+	],
+	mode: 'production',
+	optimization: {
+		minimize: true,
+		minimizer: [new TerserPlugin()]
+	}
 };
