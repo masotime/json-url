@@ -8,18 +8,18 @@ exports["default"] = void 0;
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
 var _loaders = _interopRequireDefault(require("../loaders"));
-var _default = {
+var _default = exports["default"] = {
   pack: true,
   encode: true,
   compress: function () {
-    var _compress = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(input) {
+    var _compress = (0, _asyncToGenerator2["default"])(/*#__PURE__*/_regenerator["default"].mark(function _callee(input) {
       var lzma;
-      return _regenerator["default"].wrap(function _callee$(_context) {
+      return _regenerator["default"].wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
-            _context.next = 2;
+            _context.next = 1;
             return _loaders["default"].lzma();
-          case 2:
+          case 1:
             lzma = _context.sent;
             return _context.abrupt("return", new Promise(function (ok, fail) {
               return lzma.compress(input, 9, function (byteArray, err) {
@@ -27,7 +27,7 @@ var _default = {
                 return ok(Buffer.from(byteArray));
               });
             }));
-          case 4:
+          case 2:
           case "end":
             return _context.stop();
         }
@@ -39,14 +39,14 @@ var _default = {
     return compress;
   }(),
   decompress: function () {
-    var _decompress = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(input) {
+    var _decompress = (0, _asyncToGenerator2["default"])(/*#__PURE__*/_regenerator["default"].mark(function _callee2(input) {
       var lzma;
-      return _regenerator["default"].wrap(function _callee2$(_context2) {
+      return _regenerator["default"].wrap(function (_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
-            _context2.next = 2;
+            _context2.next = 1;
             return _loaders["default"].lzma();
-          case 2:
+          case 1:
             lzma = _context2.sent;
             return _context2.abrupt("return", new Promise(function (ok, fail) {
               return lzma.decompress(input, function (byteArray, err) {
@@ -54,7 +54,7 @@ var _default = {
                 return ok(Buffer.from(byteArray));
               });
             }));
-          case 4:
+          case 2:
           case "end":
             return _context2.stop();
         }
@@ -66,5 +66,4 @@ var _default = {
     return decompress;
   }()
 };
-exports["default"] = _default;
 module.exports = exports.default;

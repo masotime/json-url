@@ -1,1 +1,1 @@
-(window.webpackJsonpJsonUrl=window.webpackJsonpJsonUrl||[]).push([[3],{42:function(n,o){},44:function(n,o){}}]);
+(self.webpackChunkJsonUrl=self.webpackChunkJsonUrl||[]).push([[81],{5340:()=>{},9838:()=>{}}]);

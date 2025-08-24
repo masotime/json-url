@@ -7,12 +7,12 @@ Object.defineProperty(exports, "__esModule", {
 exports["default"] = void 0;
 var _regenerator = _interopRequireDefault(require("@babel/runtime/regenerator"));
 var _asyncToGenerator2 = _interopRequireDefault(require("@babel/runtime/helpers/asyncToGenerator"));
-var _default = {
+var _default = exports["default"] = {
   pack: true,
   encode: true,
   compress: function () {
-    var _compress = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(_) {
-      return _regenerator["default"].wrap(function _callee$(_context) {
+    var _compress = (0, _asyncToGenerator2["default"])(/*#__PURE__*/_regenerator["default"].mark(function _callee(_) {
+      return _regenerator["default"].wrap(function (_context) {
         while (1) switch (_context.prev = _context.next) {
           case 0:
             return _context.abrupt("return", _);
@@ -28,8 +28,8 @@ var _default = {
     return compress;
   }(),
   decompress: function () {
-    var _decompress = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee2(_) {
-      return _regenerator["default"].wrap(function _callee2$(_context2) {
+    var _decompress = (0, _asyncToGenerator2["default"])(/*#__PURE__*/_regenerator["default"].mark(function _callee2(_) {
+      return _regenerator["default"].wrap(function (_context2) {
         while (1) switch (_context2.prev = _context2.next) {
           case 0:
             return _context2.abrupt("return", _);
@@ -45,5 +45,4 @@ var _default = {
     return decompress;
   }()
 };
-exports["default"] = _default;
 module.exports = exports.default;

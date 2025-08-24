@@ -22,6 +22,5 @@ function derivePath(scriptSrc) {
 
 // allows webpack to dynamically load chunks on the same path as where the index script is loaded.
 __webpack_public_path__ = derivePath(getCurrentScriptSrc()) + '/'; // eslint-disable-line
-var _default = _index["default"];
-exports["default"] = _default;
+var _default = exports["default"] = _index["default"];
 module.exports = exports.default;
